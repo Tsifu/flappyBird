@@ -23,7 +23,7 @@ function initSprites(img) {
   s_bg.color = "#70C5Cf";
   s_fg = new Sprite(img, 138, 0, 112, 56);
   s_piperNorth = new Sprite(img, 251, 0, 26, 200);
-  s_pipeSouth = new Sprite(img, 271, 0, 26, 200);
+  s_pipeSouth = new Sprite(img, 277, 0, 26, 200);
 
   s_text = {
     FlappyBird: new Sprite(img, 59, 114, 96, 22),
@@ -46,9 +46,18 @@ function initSprites(img) {
   s_numberS = new Sprite(img, 0, 177, 6, 7);
   s_numberB = new Sprite(img, 0, 188, 7, 10);
 
-  s_numberS.draw = s_numberB.draw = function(ctx, x, y, num) {
+  s_numberS.draw = s_numberB.draw = function(ctx, x, y, num, center, offset) {
     num = num.toString();
     let step = this.width + 2;
+
+    if (center) {
+      x = center - num.length * step-2/2;
+    }
+
+    if (offset) {
+      x += step*(offset - num.length);
+    }
+
     for (var i = 0; i < num.length; i++) {
       let n = parseInt(num[i]);
       ctx.drawImage(img, step*n, this.y, this.width, this.height, x, y, this.width, this.height);
